@@ -66,4 +66,8 @@ export class UsersService {
   async logout(refreshToken: string): Promise<void> {
     const token = await this.tokenService.removeToken(refreshToken);
   }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
 }

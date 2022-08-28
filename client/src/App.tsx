@@ -18,9 +18,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Views>
-        <div>Something here</div>
-      </Views>
+      <Views></Views>
     </ThemeProvider>
   );
 }

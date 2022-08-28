@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { SignUpDto } from '../users/dto/sign-up.dto';
 import * as jwt from 'jsonwebtoken';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -44,6 +44,15 @@ export class TokensService {
       accessToken,
       refreshToken,
     };
+  }
+
+  validateAccessToken(token: string) {
+    try {
+      return jwt.verify(token, process.env.JWT_ACCESS_TOKEN || 'secret098');
+    } catch (e) {
+      Logger.error('Access token validation issue', e.message);
+      return null;
+    }
   }
 
   async saveTokens(userId: number, refreshToken: string): Promise<Token> {
