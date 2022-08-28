@@ -45,6 +45,7 @@ export default function SignUp() {
     }),
     onSubmit: (values, actions) => {
       alert(JSON.stringify(values, null, 2));
+
       actions.resetForm();
     },
   });
