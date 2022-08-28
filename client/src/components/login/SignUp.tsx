@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useAppSelector } from '../../hooks/redux';
 import { ROOT, SIGN_IN } from '../../paths';
 
 function Copyright(props: any) {
@@ -49,7 +50,8 @@ export default function SignUp() {
       actions.resetForm();
     },
   });
-
+  const isAuth = useAppSelector((state) => state.userReducer.isAuth);
+  console.log(isAuth, '<-- isAuth');
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
