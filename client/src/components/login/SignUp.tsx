@@ -9,11 +9,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ISignUpValues } from '../../interfaces';
 import { ROOT, SIGN_IN } from '../../paths';
+import { signUp } from '../../store/reducers/ActionCreator';
 
 function Copyright(props: any) {
   return (
@@ -33,6 +35,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     validationSchema: Yup.object({
@@ -45,13 +48,11 @@ export default function SignUp() {
         .max(40, 'Password too long!'),
     }),
     onSubmit: (values, actions) => {
-      alert(JSON.stringify(values, null, 2));
-
+      if (values) dispatch(signUp(values));
       actions.resetForm();
     },
   });
-  const isAuth = useAppSelector((state) => state.userReducer.isAuth);
-  console.log(isAuth, '<-- isAuth');
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

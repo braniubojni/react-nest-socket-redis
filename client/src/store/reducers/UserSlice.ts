@@ -4,14 +4,12 @@ import { IUser } from '../../models/IUser';
 interface UserState {
   users: IUser[];
   isLoading: boolean;
-  isAuth: boolean;
   error: string;
 }
 
 const initialState: UserState = {
   users: [],
   isLoading: false,
-  isAuth: false,
   error: '',
 };
 
