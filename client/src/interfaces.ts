@@ -9,4 +9,9 @@ export interface ISignUpValues {
   password: string;
 }
 
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface IVewsProps extends IBasePropsInterface {}

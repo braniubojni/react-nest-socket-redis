@@ -1,11 +1,11 @@
-import $api from '../../http';
-import { IUser } from '../../models/IUser';
-import { AppDispatch } from '../store';
-import { userSlice } from './UserSlice';
-import { AuthPayload, authSlice } from './AuthSlice';
-import { SIGN_IN, SIGN_UP } from '../../paths';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import $api from '../../http';
 import { ISignUpValues } from '../../interfaces';
+import { IUser } from '../../models/IUser';
+import { SIGN_IN, SIGN_UP } from '../../paths';
+import { AppDispatch } from '../store';
+import { AuthPayload } from './AuthSlice';
+import { userSlice } from './UserSlice';
 
 export const fetchUsers = () => async (dispatch: AppDispatch) => {
   try {
@@ -28,7 +28,7 @@ export const signIn = createAsyncThunk(
         email,
         password,
       });
-      console.log(response.data);
+      console.log(response.data, 'resp data');
       return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(

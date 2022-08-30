@@ -1,20 +1,20 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROOT, SIGN_UP } from '../../paths';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { signIn, signUp } from '../../store/reducers/ActionCreator';
+import { ROOT, SIGN_UP } from '../../paths';
+import { signIn } from '../../store/reducers/ActionCreator';
 
 function Copyright(props: any) {
   return (
@@ -48,6 +48,14 @@ export default function SignIn() {
       );
     }
   };
+  const nav = useNavigate();
+  const isAuth = useAppSelector((state) => state.tokenSlice.isAuth);
+
+  useEffect(() => {
+    if (isAuth) {
+      nav(ROOT);
+    }
+  }, [isAuth, nav]);
 
   return (
     <ThemeProvider theme={theme}>

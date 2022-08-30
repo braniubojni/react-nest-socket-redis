@@ -62,8 +62,6 @@ export const authSlice = createSlice({
       state,
       { payload }: PayloadAction<AuthPayload>
     ) => {
-      console.log(payload, '<-- payload\n');
-
       localStorage.setItem('refreshToken', payload.refreshToken);
       localStorage.setItem('accessToken', payload.accessToken);
       state.accessToken = payload.accessToken;

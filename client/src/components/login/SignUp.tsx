@@ -9,11 +9,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { ISignUpValues } from '../../interfaces';
 import { ROOT, SIGN_IN } from '../../paths';
 import { signUp } from '../../store/reducers/ActionCreator';
 
@@ -36,6 +35,8 @@ const theme = createTheme();
 
 export default function SignUp() {
   const dispatch = useAppDispatch();
+  const nav = useNavigate();
+  const isAuth = useAppSelector((state) => state.tokenSlice.isAuth);
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     validationSchema: Yup.object({
@@ -52,6 +53,12 @@ export default function SignUp() {
       actions.resetForm();
     },
   });
+
+  useEffect(() => {
+    if (isAuth) {
+      nav(ROOT);
+    }
+  }, [isAuth, nav]);
 
   return (
     <ThemeProvider theme={theme}>
