@@ -31,12 +31,12 @@ export class TokensService {
     const accessToken = this.genToken(
       payload,
       process.env.JWT_ACCESS_TOKEN,
-      '30m',
+      '10m',
     );
 
     const refreshToken = this.genToken(
       payload,
-      process.env.JWT_ACCESS_TOKEN,
+      process.env.JWT_REFRESH_TOKEN,
       '30d',
     );
 
@@ -48,9 +48,22 @@ export class TokensService {
 
   validateAccessToken(token: string) {
     try {
-      return jwt.verify(token, process.env.JWT_ACCESS_TOKEN || 'secret098');
+      return jwt.verify(token, process.env.JWT_ACCESS_TOKEN);
     } catch (e) {
-      Logger.error('Access token validation issue', e.message);
+      return null;
+    }
+  }
+
+  async validateByRefresh(byToken: string) {
+    try {
+      const { refresh_token } = await this.tokenModel.findOne({
+        where: { refresh_token: byToken },
+      });
+      if (!refresh_token) return null;
+
+      return jwt.verify(refresh_token, process.env.JWT_REFRESH_TOKEN);
+    } catch (e) {
+      Logger.warn('Validation by refresh token failed', e.message);
       return null;
     }
   }

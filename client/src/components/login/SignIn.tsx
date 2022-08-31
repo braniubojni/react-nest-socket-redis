@@ -15,6 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ROOT, SIGN_UP } from '../../paths';
 import { signIn } from '../../store/reducers/ActionCreator';
+import Alert from '../dialogs/Alert';
 
 function Copyright(props: any) {
   return (
@@ -85,7 +86,6 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -98,7 +98,6 @@ export default function SignIn() {
               name="password"
               label="Password"
               type="password"
-              id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
@@ -125,6 +124,7 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <Alert />
     </ThemeProvider>
   );
 }

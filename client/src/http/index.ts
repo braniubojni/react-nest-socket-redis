@@ -12,6 +12,9 @@ $api.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       'accessToken'
     )}`;
+    config.headers.Authorization_refresh = `Bearer ${localStorage.getItem(
+      'refreshToken'
+    )}`;
   }
   return config;
 });

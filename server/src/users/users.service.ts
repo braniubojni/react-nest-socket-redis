@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import { TokensService } from '../tokens/tokens.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { User } from './entities/user.entity';
 import { ALREADY_EXISTS, FORBIDDEN, NOT_FOUND } from './users.constants';
-import * as bcrypt from 'bcrypt';
-import { TokensService } from '../tokens/tokens.service';
 import { IRegisterResult } from './users.interface';
 
 @Injectable()
@@ -43,7 +43,7 @@ export class UsersService {
     }
     const hashPassword = await bcrypt.hash(
       dto.password,
-      +process.env.SALT || 3,
+      Math.floor(Math.random() * (8 - 3) + 3), // Generate random salt
     );
     const user = this.userRepository.create({
       email: dto.email,

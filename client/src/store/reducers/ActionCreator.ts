@@ -3,8 +3,8 @@ import $api from '../../http';
 import { ISignUpValues } from '../../interfaces';
 import { IUser } from '../../models/IUser';
 import { SIGN_IN, SIGN_UP } from '../../paths';
+import AuthService from '../../services/AuthService';
 import { AppDispatch } from '../store';
-import { AuthPayload } from './AuthSlice';
 import { userSlice } from './UserSlice';
 
 export const fetchUsers = () => async (dispatch: AppDispatch) => {
@@ -24,11 +24,7 @@ export const signIn = createAsyncThunk(
   `/users${SIGN_IN}`,
   async ({ email, password }: ISignUpValues, thunkAPI) => {
     try {
-      const response = await $api.post<AuthPayload>(`/users${SIGN_IN}`, {
-        email,
-        password,
-      });
-      console.log(response.data, 'resp data');
+      const response = await AuthService.signIn(email, password);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(
@@ -42,10 +38,7 @@ export const signUp = createAsyncThunk(
   `/users${SIGN_UP}`,
   async ({ email, password }: ISignUpValues, thunkAPI) => {
     try {
-      const response = await $api.post<AuthPayload>(`/users${SIGN_UP}`, {
-        email,
-        password,
-      });
+      const response = await AuthService.signUp(email, password);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(

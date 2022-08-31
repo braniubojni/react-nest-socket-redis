@@ -12,13 +12,12 @@ const Views = ({ children }: IVewsProps) => {
   const dispatch = useAppDispatch();
   const accessToken = localStorage.getItem('accessToken');
   useEffect(() => {
-    console.log(accessToken, '<---- accessToken');
     if (!!accessToken) {
       dispatch(setToken(true));
     } else {
       dispatch(setToken(false));
     }
-  }, [accessToken]);
+  }, [accessToken, dispatch]);
   return (
     <Routes>
       <Route path={ROOT} element={<Home />} />
